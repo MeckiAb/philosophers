@@ -6,12 +6,14 @@
 #    By: labderra <labderra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 13:13:00 by labderra          #+#    #+#              #
-#    Updated: 2024/08/07 13:37:43 by labderra         ###   ########.fr        #
+#    Updated: 2024/08/21 11:39:34 by labderra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 SRC = philo.c \
+initialize.c \
+utils.c
 
 CC = clang -Wall -Wextra -Werror -pthread -g -fsanitize=address
 OBJ = $(SRC:.c=.o)
@@ -32,4 +34,7 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re 
+test : all
+	./philo 2 500 100 100
+
+.PHONY : all clean fclean re test
