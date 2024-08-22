@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:33:44 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/21 13:43:05 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:45:49 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,33 @@ int	ft_atoi(const char *str)
 		return (-1);
 }
 
-unsigned int	my_time(struct timeval *clk)
+unsigned int	my_time(void)
 {
-	gettimeofday(clk, NULL);
-	return (clk->tv_sec * 1000 + clk->tv_usec / 1000);
+	struct timeval	clock;
+
+	gettimeofday(&clock, NULL);
+	return (clock.tv_sec * 1000 + clock.tv_usec / 1000);
 }
 
 void	mlsleep(unsigned int w_time)
 {
-	unsigned int	i;
+	unsigned int	now;
+	unsigned int	start;
+	struct timeval	clock;
 
-	i = 10 * w_time;
-	while (i--)
-		usleep(100);
+	if (w_time < 1)
+		return ;
+	gettimeofday(&clock, NULL);
+	start = clock.tv_usec;
+	w_time = w_time * 1000 + start;
+	now = start;
+	while (now <= w_time)
+	{
+		if (w_time - now > 1000)
+			usleep((w_time - now) / 2);
+		gettimeofday(&clock, NULL);
+		now = clock.tv_usec;
+	}
 }
 
 void	free_all(t_table *table)
@@ -62,7 +76,6 @@ void	free_all(t_table *table)
 		free(table->ph_meals);
 		free(table->lastmeal);
 		free(table->fork);
-		free(table->clk);
 		free(table);
 	}
 }
@@ -72,6 +85,6 @@ void	info(t_table *table, int philo, char *text)
 	if (table->end_condition)
 		return ;
 	pthread_mutex_lock(&table->printer);
-	printf("%5d %5d%s\n", my_time(table->clk) - table->epoch, philo, text);
+	printf("%5u %5d%s\n", my_time() - table->epoch, philo, text);
 	pthread_mutex_unlock(&(table->printer));
 }

@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:35:50 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/21 13:40:53 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:31:32 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ t_table	*init_table(int argc, char **argv)
 	table->ph_meals = malloc(sizeof(int) * table->n_philo);
 	table->lastmeal = malloc(sizeof(unsigned int) * table->n_philo);
 	table->fork = malloc(sizeof(pthread_mutex_t) * table->n_philo);
-	table->clk = malloc(sizeof(struct timeval));
 	if (!table->ph_thread || !table->ph_meals || !table->lastmeal
-		|| !table->fork || !table->clk)
+		|| !table->fork)
 		return (free_all(table), NULL);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
@@ -36,7 +35,7 @@ t_table	*init_table(int argc, char **argv)
 	else
 		table->max_meals = -1;
 	table->end_condition = 0;
-	table->epoch = my_time(table->clk);
+	table->epoch = my_time();
 	return (table);
 }
 
@@ -60,7 +59,6 @@ void	init_philo(t_init_philo *init_ph, t_table *table)
 		init_ph->philo_id = i;
 		pthread_create(&table->ph_thread[i++], 0, &ph_routine, (void *)init_ph);
 		mlsleep(1);
-		//i++;
 	}
 }
 
@@ -78,7 +76,7 @@ void	*ph_routine(void *arg)
 		info(table, self + 1, " has taken a fork");
 		pthread_mutex_lock(&table->fork[(self + 1) % table->n_philo]);
 		info(table, self + 1, " has taken a fork");
-		table->lastmeal[self] = my_time(table->clk);
+		table->lastmeal[self] = my_time();
 		table->ph_meals[self] += 1;
 		info(table, self + 1, " is eating");
 		mlsleep(table->time_to_eat);

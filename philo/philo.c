@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:59:41 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/21 13:38:34 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:31:43 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	end_condition_loop(t_table *table)
 		i = -1;
 		while (++i < table->n_philo)
 		{
-			if (my_time(table->clk) - table->lastmeal[i] > table->time_to_die)
+			if (my_time() - table->lastmeal[i] > table->time_to_die)
 			{
 				info(table, i + 1, " died");
 				return (table->end_condition = 1, 1);
