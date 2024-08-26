@@ -6,7 +6,7 @@
 #    By: labderra <labderra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 13:13:00 by labderra          #+#    #+#              #
-#    Updated: 2024/08/21 11:39:34 by labderra         ###   ########.fr        #
+#    Updated: 2024/08/26 11:11:26 by labderra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC = philo.c \
 initialize.c \
 utils.c
 
-CC = clang -Wall -Wextra -Werror -pthread -g -fsanitize=address
+CC = clang -Wall -Wextra -Werror -pthread -g #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)

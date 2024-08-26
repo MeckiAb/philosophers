@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:59:41 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/22 12:31:43 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:22:50 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < table->n_philo)
 	{
+		pthread_mutex_unlock(&table->fork[i]);
 		pthread_mutex_destroy(&table->fork[i]);
-		pthread_join(table->ph_thread[i], NULL);
-		i++;
+		pthread_join(table->ph_thread[i++], NULL);
 	}
 	pthread_mutex_destroy(&table->printer);
 	free_all(table);

@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:33:44 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/22 12:45:49 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:49:08 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ unsigned int	my_time(void)
 	return (clock.tv_sec * 1000 + clock.tv_usec / 1000);
 }
 
-void	mlsleep(unsigned int w_time)
+void	mlsleep(unsigned long int w_time)
 {
-	unsigned int	now;
-	unsigned int	start;
-	struct timeval	clock;
+	unsigned long int	now;
+	unsigned long int	start;
+	struct timeval		clock;
 
 	if (w_time < 1)
 		return ;
 	gettimeofday(&clock, NULL);
-	start = clock.tv_usec;
+	start = clock.tv_sec * 1000000 + clock.tv_usec;
 	w_time = w_time * 1000 + start;
 	now = start;
 	while (now <= w_time)
@@ -64,7 +64,7 @@ void	mlsleep(unsigned int w_time)
 		if (w_time - now > 1000)
 			usleep((w_time - now) / 2);
 		gettimeofday(&clock, NULL);
-		now = clock.tv_usec;
+		now = clock.tv_sec * 1000000 + clock.tv_usec;
 	}
 }
 

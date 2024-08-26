@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:00:23 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/22 12:31:49 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:03:42 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_init_philo
 
 int				ft_atoi(const char *str);
 unsigned int	my_time(void);
-void			mlsleep(unsigned int w_time);
+void			mlsleep(unsigned long int w_time);
 void			free_all(t_table *table);
 void			info(t_table *table, int philo, char *text);
 t_table			*init_table(int argc, char **argv);

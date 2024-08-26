@@ -6,7 +6,7 @@
 /*   By: labderra <labderra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:35:50 by labderra          #+#    #+#             */
-/*   Updated: 2024/08/22 12:31:32 by labderra         ###   ########.fr       */
+/*   Updated: 2024/08/26 09:46:41 by labderra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ void	init_philo(t_init_philo *init_ph, t_table *table)
 	while (i < table->n_philo)
 	{
 		init_ph->philo_id = i;
-		pthread_create(&table->ph_thread[i++], 0, &ph_routine, (void *)init_ph);
+		pthread_create(&table->ph_thread[i], 0, &ph_routine, (void *)init_ph);
 		mlsleep(1);
+		i++;
 	}
 }
 
@@ -80,8 +81,8 @@ void	*ph_routine(void *arg)
 		table->ph_meals[self] += 1;
 		info(table, self + 1, " is eating");
 		mlsleep(table->time_to_eat);
-		pthread_mutex_unlock(&table->fork[self]);
 		pthread_mutex_unlock(&table->fork[(self + 1) % table->n_philo]);
+		pthread_mutex_unlock(&table->fork[self]);
 		info(table, self + 1, " is sleeping");
 		mlsleep(table->time_to_sleep);
 	}
